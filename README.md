@@ -50,9 +50,9 @@ Para realizar esta práctica de manera óptima, el estudiante necesita tener cla
 
 ## 6. Equipo necesario
 
-- Computador con sistema operativo Windows, Linux o macOS.
+- Computador con sistema operativo Windows.
 - Conexión estable a Internet.
-- Navegador web actualizado (Google Chrome, Mozilla Firefox o Microsoft Edge).
+- Navegador web actualizado.
 - Entorno interactivo virtualizado basado en la nube Killercoda con Docker y Docker Compose preinstalados.
 
 
@@ -188,11 +188,6 @@ Al finalizar la práctica se espera que el estudiante demuestre el correcto desp
 
 ### Captura 1 (Terminal)
 Salida del comando `docker ps` que liste con éxito los tres contenedores en estado activo:
-
-```text
-STATUS: Up X seconds/minutes
-```
-![Captura de terminal de Killercoda](terminal1.png)
 ![Captura de terminal de Killercoda](terminal2.png)
 
 ### Captura 2 (Navegador - Puerto 8080)

@@ -1,14 +1,14 @@
-# Práctica de Laboratorio: Despliegue de Servidor Web Multi-Contenedor en Docker
+# Práctica: Wordpress con docker compose YML
 
 ## 1. Título
 **Despliegue automatizado de una arquitectura de tres capas WordPress, MySQL y phpMyAdmin utilizando redes y volúmenes en Docker Compose.**
 
----
+
 
 ## 2. Tiempo de duración
 **90 minutos**
 
----
+
 
 ## 3. Fundamentos
 
@@ -28,7 +28,6 @@ Por defecto, los contenedores son efímeros; si un contenedor se destruye, todos
 
 Por otro lado, el aislamiento se logra mediante las Redes de Docker. Al asociar contenedores a una misma red privada virtual, Docker habilita un sistema de resolución de nombres DNS interno. Esto permite que el servicio web se conecte al motor de la base de datos utilizando simplemente el nombre del servicio (por ejemplo, `db`) en lugar de direcciones IP dinámicas, restringiendo el acceso no deseado desde redes externas y aumentando la seguridad del sistema.
 
----
 
 ## 4. Conocimientos previos
 
@@ -39,7 +38,7 @@ Para realizar esta práctica de manera óptima, el estudiante necesita tener cla
 - **Conceptos de Redes:** Mapeo de puertos (`host:contenedor`), protocolos TCP/IP y funcionamiento básico de servicios web (HTTP/puerto 80).
 - **Manejo del navegador:** Uso de herramientas de desarrollo y acceso a servicios mediante puertos específicos en entornos locales o virtuales.
 
----
+
 
 ## 5. Objetivos a alcanzar
 
@@ -48,7 +47,6 @@ Para realizar esta práctica de manera óptima, el estudiante necesita tener cla
 - Configurar volúmenes independientes para asegurar la persistencia de datos de la aplicación y el motor de base de datos.
 - Desplegar una red virtual tipo `bridge` para el aislamiento y comunicación segura entre los servicios.
 
----
 
 ## 6. Equipo necesario
 
@@ -57,7 +55,7 @@ Para realizar esta práctica de manera óptima, el estudiante necesita tener cla
 - Navegador web actualizado (Google Chrome, Mozilla Firefox o Microsoft Edge).
 - Entorno interactivo virtualizado basado en la nube Killercoda con Docker y Docker Compose preinstalados.
 
----
+
 
 ## 7. Material de apoyo
 
@@ -69,7 +67,7 @@ Para realizar esta práctica de manera óptima, el estudiante necesita tener cla
 
 - Hoja de referencia de comandos Linux (Linux Cheat Sheet).
 
----
+
 
 # 8. Procedimiento
 
@@ -80,8 +78,6 @@ Acceder a la terminal de Linux en el entorno de Killercoda y ejecutar el comando
 ```bash
 mkdir mi-sitio-wp && cd mi-sitio-wp
 ```
-
----
 
 ## Paso 2: Creación del archivo de configuración YAML
 
@@ -148,7 +144,6 @@ networks:
 EOF
 ```
 
----
 
 ## Paso 3: Verificación de la escritura del archivo
 
@@ -158,7 +153,6 @@ Confirmar que el archivo se guardó íntegramente imprimiendo su contenido en la
 cat docker-compose.yml
 ```
 
----
 
 ## Paso 4: Despliegue de los contenedores
 
@@ -170,7 +164,6 @@ docker-compose up -d
 
 Esperar a que finalice la descarga de capas de las imágenes desde Docker Hub hasta que la terminal indique el estado iniciado de cada servicio.
 
----
 
 ## Paso 5: Diagnóstico y verificación del estado operacional
 
@@ -184,13 +177,10 @@ docker ps
 
 Abrir la utilidad de gestión de puertos expuestos de Killercoda (*Traffic Ports*), ingresar el puerto `8080` y proceder con la selección de idioma y creación del usuario administrador del sitio web dentro de la interfaz gráfica cargada.
 
----
-
 ## Paso 7: Verificación del motor de base de datos MySQL
 
 Abrir una nueva pestaña de tráfico utilizando el puerto `8081` para cargar phpMyAdmin. Autenticarse utilizando el usuario `root` y la clave establecida para verificar la generación automática de las tablas dentro del esquema `wordpress_db`.
 
----
 
 # 9. Resultados esperados
 
@@ -202,14 +192,15 @@ Salida del comando `docker ps` que liste con éxito los tres contenedores en est
 ```text
 STATUS: Up X seconds/minutes
 ```
+![Captura de terminal de Killercoda](terminal1.png)
+![Captura de terminal de Killercoda](terminal2.png)
 
 ### Captura 2 (Navegador - Puerto 8080)
-Vista del asistente de instalación de WordPress, validando la ejecución del código PHP dentro del contenedor web.
 
+![Captura Dashboard de Wordpress](wordpress.png)
 ### Captura 3 (Navegador - Puerto 8081)
-Interfaz interna de phpMyAdmin que certifique el acceso total a las tablas de la base de datos MySQL tras la comunicación inter-contenedor.
+![Captura php myadmin](php.png)
 
----
 
 # 10. Bibliografía
 

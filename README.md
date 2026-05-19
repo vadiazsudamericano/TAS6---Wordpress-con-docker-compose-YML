@@ -11,23 +11,21 @@
 
 ## 3. Fundamentos
 
-Para comprender el desarrollo de esta práctica, es indispensable dominar los conceptos clave de la tecnología de contenedores. A diferencia de la virtualización tradicional, donde cada máquina virtual (VM) requiere un sistema operativo invitado completo, la contenedorización permite que múltiples aplicaciones compartan el mismo núcleo del sistema operativo anfitrión. Esto se traduce en un consumo de recursos drásticamente menor, arranques en cuestión de segundos y una portabilidad absoluta entre entornos de desarrollo, pruebas y producción.
+Para comprender el desarrollo de esta práctica, es indispensable dominar los conceptos clave de la tecnología de contenedores. A diferencia de la virtualización tradicional, donde cada máquina virtual (VM) requiere un hipervisor y un sistema operativo invitado (*Guest OS*) completo, la contenedorización permite que múltiples aplicaciones aisladas compartan el mismo núcleo (*kernel*) del sistema operativo anfitrión (Turnbull, 2014). De acuerdo con el análisis de Joy (2015), esta característica estructural elimina la sobrecarga de emular hardware físico, lo que se traduce en un consumo de recursos drásticamente menor, arranques casi instantáneos en cuestión de milisegundos y una portabilidad absoluta entre entornos de desarrollo, pruebas y entornos de producción.
 
 ### El Ecosistema Docker y sus Componentes
 
-Docker funciona bajo un modelo cliente-servidor. El Docker Daemon es el servicio en segundo plano que gestiona los objetos de Docker, como las imágenes, los contenedores, las redes y los volúmenes. Una Imagen de Docker es una plantilla de solo lectura que contiene las instrucciones para crear un contenedor. Estas imágenes se componen de capas superpuestas y se descargan desde repositorios públicos como Docker Hub. Un Contenedor es la instancia ejecutable y viva de esa imagen, corriendo en un entorno aislado.
+Docker opera bajo una arquitectura distribuida de tipo cliente-servidor. El componente central es el Docker Daemon dockerd, un servicio continuo en segundo plano que escucha las peticiones de la API de Docker y gestiona los objetos principales del sistema, como imágenes, contenedores, redes virtuales y volúmenes persistentes (Docker, s.f.). Una Imagen de Docker se define como una plantilla de solo lectura y de carácter inmutable que contiene las instrucciones y dependencias necesarias para instanciar una aplicación. Estas imágenes se estructuran mediante capas superpuestas basadas en un sistema de archivos de unión Union File System, optimizando el almacenamiento compartido a través de repositorios públicos centralizados como Docker Hub (Turnbull, 2014). Por su parte, un **Contenedor** es la instancia de ejecución viva, aislada y de lectura-escritura creada a partir de dicha imagen base.
 
 ### Orquestación Local con Docker Compose
 
-Cuando una aplicación requiere múltiples servicios interactuando entre sí (como un frontend web, una base de datos y un administrador), gestionarlos con comandos individuales de Docker se vuelve ineficiente. Docker Compose es una herramienta que permite definir y correr aplicaciones multi-contenedor mediante un único archivo de configuración en formato YAML (`docker-compose.yml`). En este archivo se especifican de forma declarativa los servicios, los puertos expuestos, las variables de entorno y las dependencias de arranque (`depends_on`).
+Cuando una aplicación web evoluciona hacia una arquitectura distribuida de múltiples capas (como un frontend, un motor de base de datos relacional y herramientas de administración), la gestión manual e individual de cada contenedor mediante la interfaz de línea de comandos CLI se vuelve ineficiente y propensa a fallos operacionales. Docker Compose resuelve esta problemática al introducir el concepto de infraestructura como código IaC, permitiendo definir y coordinar aplicaciones multi-contenedor a través de un único archivo de configuración estructurado en formato YAML (`docker-compose.yml`) (Docker, s.f.). En este archivo se especifican de forma declarativa las propiedades de cada servicio, los mapeos de puertos de red, las credenciales internas y las directivas de ordenamiento en el arranque mediante la cláusula `depends_on`. En arquitecturas de sistemas de gestión de contenidos CMS como WordPress, esta automatización reduce drásticamente las discrepancias de entorno y los errores humanos en la sincronización de servicios en segundo plano (Warner & Harris, 2020).
 
 ### Redes y Volúmenes: Comunicación y Persistencia
 
-Por defecto, los contenedores son efímeros; si un contenedor se destruye, todos los datos generados en su interior se pierden. Para solucionar esto, Docker implementa Volúmenes, que son mecanismos de almacenamiento que conectan una carpeta interna del contenedor con el disco de la máquina anfitriona, garantizando la persistencia de los datos.
+Por defecto, el ciclo de vida de los contenedores se rige bajo un principio efímero e indeterminado; si un contenedor se detiene, se corrompe o se destruye, todas las mutaciones de datos generadas en su capa de escritura superior se pierden de forma irreversible. Para mitigar esta limitación estructural, Docker implementa Volúmenes, los cuales corresponden a directorios gestionados de forma nativa por el demonio de Docker que puentean un sector del sistema de archivos interno del contenedor con el almacenamiento físico de la máquina anfitriona, independizando los datos del ciclo de vida del proceso ejecutable (Turnbull, 2014).
 
-Por otro lado, el aislamiento se logra mediante las Redes de Docker. Al asociar contenedores a una misma red privada virtual, Docker habilita un sistema de resolución de nombres DNS interno. Esto permite que el servicio web se conecte al motor de la base de datos utilizando simplemente el nombre del servicio (por ejemplo, `db`) en lugar de direcciones IP dinámicas, restringiendo el acceso no deseado desde redes externas y aumentando la seguridad del sistema.
-
-
+En el plano de la conectividad, el aislamiento perimetral se delega a las Redes de Docker utilizando controladores virtuales, de los cuales el controlador tipo bridge es el estándar para despliegues en un mismo nodo. Al asociar múltiples servicios a una misma red privada virtualizada, Docker habilita de forma automática un servidor DNS interno para la resolución de nombres de servicio (Docker, s.f.). Este mecanismo permite que el contenedor de WordPress localice e interactúe con el motor de base de datos apuntando directamente al alias lógico (por ejemplo, `db:3306`) en lugar de depender de direccionamiento IP dinámico. Esto restringe cualquier tipo de exposición innecesaria hacia redes externas, consolidando un esquema robusto de seguridad perimetral dentro del ecosistema (Joy, 2015).
 ## 4. Conocimientos previos
 
 Para realizar esta práctica de manera óptima, el estudiante necesita tener claros los siguientes temas:
@@ -198,9 +196,10 @@ Salida del comando `docker ps` que liste con éxito los tres contenedores en est
 
 # 10. Bibliografía
 
-- Docker. (2024). *Docker Compose overview*. Docker Documentation.  
-  https://docs.docker.com/compose/
+Docker. (s.f.). *Docker Compose overview*. Docker Documentation. https://docs.docker.com/compose/
 
-- Turnbull, J. (2014). *The Docker Book: Containerization is the new virtualization*. James Turnbull.
+Joy, A. M. (2015). Performance comparison of OS-level virtualization framework for cloud computing. *2015 International Conference on Control Communication & Computing India (ICCC)*, 466-470. https://doi.org/10.1109/ICCC.2015.7432936
 
-- Warner, J., & Harris, S. (2020). *WordPress All-in-One For Dummies*. John Wiley & Sons.
+Turnbull, J. (2014). *The Docker Book: Containerization is the new virtualization*. James Turnbull.
+
+Warner, J., & Harris, S. (2020). *WordPress All-in-One For Dummies*. John Wiley & Sons.

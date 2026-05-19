@@ -6,8 +6,7 @@
 
 
 ## 2. Tiempo de duración
-**90 minutos**
-
+90 minutos
 
 
 ## 3. Fundamentos
@@ -45,7 +44,7 @@ Para realizar esta práctica de manera óptima, el estudiante necesita tener cla
 - Implementar un entorno web multi-contenedor utilizando WordPress, MySQL y phpMyAdmin de forma integrada.
 - Manipular archivos de configuración en formato YAML para estructurar de manera lógica la infraestructura.
 - Configurar volúmenes independientes para asegurar la persistencia de datos de la aplicación y el motor de base de datos.
-- Desplegar una red virtual tipo `bridge` para el aislamiento y comunicación segura entre los servicios.
+- Desplegar una red virtual tipo bridge para el aislamiento y comunicación segura entre los servicios.
 
 
 ## 6. Equipo necesario
@@ -175,7 +174,7 @@ docker ps
 
 ## Paso 6: Configuración del CMS WordPress
 
-Abrir la utilidad de gestión de puertos expuestos de Killercoda (*Traffic Ports*), ingresar el puerto `8080` y proceder con la selección de idioma y creación del usuario administrador del sitio web dentro de la interfaz gráfica cargada.
+Abrir la utilidad de gestión de puertos expuestos de Killercoda Traffic Ports, ingresar el puerto `8080` y proceder con la selección de idioma y creación del usuario administrador del sitio web dentro de la interfaz gráfica cargada.
 
 ## Paso 7: Verificación del motor de base de datos MySQL
 
